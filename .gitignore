@@ -11,6 +11,7 @@ src/pyvenv.cfg
 
 # Max .DS_Store file
 .DS_Store
+working/tests
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
