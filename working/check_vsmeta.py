@@ -1,5 +1,6 @@
 from datetime import date 
 import os
+import sys
 
 from vsmetaCodec.vsmetaEncoder import VsMetaMovieEncoder
 from vsmetaCodec.vsmetaDecoder import VsMetaDecoder
@@ -44,10 +45,21 @@ def process_file(file_path):
 # Directory where you want to search for .vsmeta files
 directory_path = "."
 
-# Search for files with .vsmeta extension in the directory
-files = glob.glob(directory_path + "/*.vsmeta")
+# Check if a file path is provided as a command-line argument
+if len(sys.argv) > 1:
+    # If a file path is provided, process only that file
+    file_path = sys.argv[1]
+    if os.path.isfile(file_path) and file_path.endswith(".vsmeta"):
+        print("Processing file:", file_path)
+        process_file(file_path)
+    else:
+        print("Invalid file path or file format. Please provide a valid path to a .vsmeta file.")
+else:
+    # If no file path is provided, search for .vsmeta files in the directory
+    # Search for files with .vsmeta extension in the directory
+    files = glob.glob(directory_path + "/*.vsmeta")
 
-# Iterate over the files and run the process_file function on each file
-for file_path in files:
-    print(f"-------------- : Processing file [{file_path}]")
-    process_file(file_path)
+    # Iterate over the files and run the process_file function on each file
+    for file_path in files:
+        print(f"-------------- : Processing file [{file_path}]")
+        process_file(file_path)
