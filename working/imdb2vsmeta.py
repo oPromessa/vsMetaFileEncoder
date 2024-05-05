@@ -180,9 +180,9 @@ def copy_files_from_csv(csv_file_path, force=False):
                     shutil.copy(source_file_path, destination_folder_path)
                     print(f"\tCopied ['{file_name}'] to ['{destination_file_path}'].")
                 elif not force:
-                    click.echo(f"\tAlready exists ['{file_name}'] in ['{destination_file_path}'], skipping. Use -f option to force copy.")
+                    click.echo(f"\tSkipping ['{file_name}'] in ['{destination_file_path}']. Destiantion exists. See -f option.")
                 else:
-                    click.echo(f"\tAlready exists ['{file_name}'] in ['{destination_file_path}'], force option selected. Overwriting...")
+                    click.echo(f"\Overwriting ['{file_name}'] in ['{destination_file_path}'].")
                     shutil.copy(source_file_path, destination_folder_path)
                     print(f"\tCopied ['{file_name}'] to ['{destination_file_path}'].")
             else:
