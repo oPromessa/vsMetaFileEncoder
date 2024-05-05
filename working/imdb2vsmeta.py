@@ -81,45 +81,83 @@ def map_to_vsmeta(imdb_info, posterFile, filename):
         # 'rating': imdb_info['rating']['ratingValue'],
         # # Add more fields as needed
 
-    # Movie
+    # Title
     info.showTitle = imdb_info['name']
-    info.showTitle2 = imdb_info['name']
+        # Test: ignore
+        # info.showTitle2 = imdb_info['name']
+    # Short Title
     info.episodeTitle = imdb_info['name']
-    info.year=imdb_info['datePublished'][:4]
+        # info.year=imdb_info['datePublished'][:4]
+    
+    # Publishing Date - episodeReleaseDate
     info.setEpisodeDate(date(
         int(imdb_info['datePublished'][:4]),
         int(imdb_info['datePublished'][5:7]),
         int(imdb_info['datePublished'][8:])))
-    info.timestamp = int(datetime.now().timestamp())
-    info.episodeLocked = True
+    
+    # Set to 0 for Movies: season and episode
+    info.season = 0
+    info.episode = 0
+    
+    # Not used. Set to 1900-01-01
+    info.tvshowReleaseDate = date(1900, 1, 1)
+
+    # Try with Locked = False
+    info.episodeLocked = False
+
+    # Summary
     info.chapterSummary = imdb_info['description']
+
+    # Classification
     # A rating of None would crash the reading of .vsmeta file with error:
     #    return info._readData(info.readSpecialInt()).decode()
     #           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     # UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8a in position 1: invalid start byte
     info.classification = "" if imdb_info['contentRating'] == None else imdb_info['contentRating']
+
+    # Rating
     info.rating = imdb_info['rating']['ratingValue']
-    info.list.genre = imdb_info['genre']
-    info.list.director = []
-    for director in imdb_info['director']:
-        info.list.director.append(director['name'])
+
+    # Cast
     info.list.cast = [] 
     for actor in imdb_info['actor']:
         info.list.cast.append(actor['name'])
+    
+    # Genre
+    info.list.genre = imdb_info['genre']
+
+    # Director
+    info.list.director = []
+    for director in imdb_info['director']:
+        info.list.director.append(director['name'])
+
+    # Writer    
     info.list.writer = []
     for creator in imdb_info['creator']:
         info.list.writer.append(creator['name'])
 
-    # Poster file
+
+    # Read JPG images for Poster and Background
     with open(posterFile, "rb") as image:
         f = image.read()
-
-    # Use Posters file for Backdrop also
-    info.backdropImageInfo.image = f
-
+    
+    # Poster (of Movie)
     episode_img = VsMetaImageInfo()
     episode_img.image = f
     info.episodeImageInfo.append(episode_img)
+
+    # Background (of Movie)
+    # Use Posters file for Backdrop also
+    info.backdropImageInfo.image = f
+
+    # Not used. Set to VsImageIfnfo()
+    info.posterImageInfo = episode_img
+
+    # Double check!
+    info.timestamp = int(datetime.now().timestamp())
+
+    # Try to set VSMETA to null to force VS to recognize the file???
+    # info.episodeMetaJson = ''
 
     print(f"\tTitle          : {info.showTitle}")
     print(f"\tTitle2         : {info.showTitle2}")
@@ -182,7 +220,7 @@ def copy_files_from_csv(csv_file_path, force=False):
                 elif not force:
                     click.echo(f"\tSkipping ['{file_name}'] in ['{destination_file_path}']. Destiantion exists. See -f option.")
                 else:
-                    click.echo(f"\Overwriting ['{file_name}'] in ['{destination_file_path}'].")
+                    click.echo(f"\tOverwriting ['{file_name}'] in ['{destination_file_path}'].")
                     shutil.copy(source_file_path, destination_folder_path)
                     print(f"\tCopied ['{file_name}'] to ['{destination_file_path}'].")
             else:
