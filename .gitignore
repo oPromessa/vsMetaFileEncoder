@@ -9,7 +9,7 @@ venv_syno/
 *.code-workspace
 src/pyvenv.cfg
 
-# Max .DS_Store file
+# Mac .DS_Store file
 .DS_Store
 imdb2vsmeta/tests
 
