@@ -16,18 +16,11 @@ def readTemplateFile(filename: str) -> bytes:
     return file_content
 
 def process_file(file_path):
-    # Define your function to process each file here
-    # For example, you can read the file contents or perform any specific task
-    # with open(file_path, 'r') as file:
-    #     file_contents = file.read()
-    #     # Do something with the file contents
-    #     print("Processing file:", file_path)
-    #     # Example: Print file contents
-    #     print(file_contents)
-
-    # --------------------------------------------------------------
-    # READER video.mp4.vsmeta
-    # --------------------------------------------------------------
+    """Read .vsmeta file and print it's contents. 
+    
+    Images within .vsmeta are saved as image_back_drop.jpg and image_poster_NN.jpg
+    When checking multiple files, these files are overwritten.
+    """
 
     vsmeta_bytes = readTemplateFile(file_path)
     reader = VsMetaDecoder()
