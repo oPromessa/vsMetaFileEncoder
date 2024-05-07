@@ -253,7 +253,7 @@ def copy_file(source, destination, force=False, no_copy=False, verbose=False):
 
 
 def find_files(root_dir, filename_prefix):
-    valid_ext = (".mp4", ".mkv", ".avi")
+    valid_ext = (".mp4", ".mkv", ".avi", ".mpg")
 
     for root, dirs, files in os.walk(root_dir):
         for file in files:

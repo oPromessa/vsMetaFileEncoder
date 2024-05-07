@@ -19,10 +19,14 @@
 ```sh
 python3.11 -m venv venv
 source venv/bin/activate
-python3.11 -m pip install -e .
+pip install vsmetaEncoder
 pip install imdbmovies
 pip install requests
 pip install click
+```
+
+```sh
+python3.11 -m pip install -e .
 ```
 
 ### Usage
