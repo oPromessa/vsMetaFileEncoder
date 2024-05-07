@@ -8,6 +8,11 @@
 * https://gist.github.com/soywiz/2c10feb1231e70aca19a58aca9d6c16a
 
 
+### RTFM
+
+* IMPORTANT: The .vsmeta file is available when Video Station indexes the video file first time.
+* Use a Staging area to put the Videos and eht .vsmeta file outside the Video Station Library. You can then move them inside and voila.. VideoStation reads everything nicely!
+
 ### Setup Environment
 
 ```sh
